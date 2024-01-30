@@ -1,1 +1,1 @@
-# gjango-lesson
+# django-lesson
