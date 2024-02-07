@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block header %}<h1>{{ post.category }} {{ post.title }}</h1>{% endblock header %}
+{% block content %}
+    <div class="text">{{ post.description }}</div>
+{% endblock content %}
+{% block footer %}
+    <p>Created: {{ post.date }}</p>
+    <p>Views: {{ post.views }}</p>
+{% endblock footer %}
