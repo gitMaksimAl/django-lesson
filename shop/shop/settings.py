@@ -54,6 +54,11 @@ LOGGING = {
             "propagate": False,
             "level": "DEBUG",
         },
+        "django.db.backends": {
+            "handlers": ["console"],
+            "propagate": False,
+            "level": "INFO",
+        },
     },
 }
 
@@ -66,7 +71,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'shop',
+    'firstapp',
 ]
 
 MIDDLEWARE = [
