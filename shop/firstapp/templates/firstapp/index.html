@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1 style="text-align: center">Welcome to GB Magazine</h1>
+{% endblock header %}
+{% block main %}
+    {% for item in items %}
+        <div class="content" style="display: inline-block">
+            <p>item.summary</p>
+            <ul>
+                <li>item.description</li>
+                <li>item.price</li>
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock main %}
+{% block footer %}
+{% endblock footer %}
