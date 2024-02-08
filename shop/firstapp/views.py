@@ -82,7 +82,7 @@ def client_orders(request: HttpRequest, client_pk: int) -> HttpResponse:
             orders["orders"]["lt_month"]["items"].append(order)
             orders["orders"]["lt_week"]["total"] += order.item.price
         elif (today - order.created_at).year == 0:
-            orders["orders"].setdefault("gt_year", {
+            orders["orders"].setdefault("lt_year", {
                 "title": "In last year",
                 "items": [],
                 "total": Decimal(0)
