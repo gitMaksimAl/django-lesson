@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1 style="text-align: center">{{ item.summary }}</h1>
+{% endblock header %}
+{% block main %}
+    {% if item %}
+    <div>
+        <img src="" alt="Image must be here">
+        <ul>
+            <li>{{ item.description }}</li>
+            <li>{{ item.price }}</li>
+        </ul>
+    </div>
+    {% endif %}
+{% endblock main %}
+{% block footer %}
+<p>Copyrigth</p>
+{% endblock footer %}
