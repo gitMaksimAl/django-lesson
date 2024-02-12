@@ -1,5 +1,7 @@
-from django.db import models
 from datetime import datetime
+
+from django.utils import timezone
+from django.db import models
 
 
 class Client(models.Model):
@@ -13,12 +15,19 @@ class Client(models.Model):
         return f"{self.name} {self.email} {self.phone_number}"
 
 
+class Picture(models.Model):
+    image: str = models.ImageField()
+
+    def __str__(self):
+        return f"Picture('{self.image}')"
+
 class Item(models.Model):
     summary: str = models.CharField(max_length=25)
     description: str = models.TextField()
     price: float = models.DecimalField(decimal_places=2, max_digits=7)
     count: int = models.IntegerField()
-    added_at: datetime = models.DateTimeField()
+    image: int = models.ForeignKey(Picture, on_delete=models.CASCADE, default=1)
+    added_at: datetime = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.summary}: {self.price}₽"
@@ -38,4 +47,3 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order №{self.pk} {self.created_at}: {self.client}, {self.item}"
-

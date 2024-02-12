@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1 style="text-align: center">New image</h1>
+{% endblock header %}
+{% block main %}
+    {{ message }}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock main %}
+{% block footer %}
+<p>Copyrigth</p>
+{% endblock footer %}
