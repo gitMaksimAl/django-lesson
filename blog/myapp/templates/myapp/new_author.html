@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block header %}<h1>New author</h1>{% endblock header %}
+{% block content %}
+    <form method="POST" class="author-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit"></input>
+    </form>
+{% endblock content %}
+{% block footer %}<p>See you soon!</p>{% endblock footer %}

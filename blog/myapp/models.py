@@ -1,5 +1,7 @@
-from django.db import models
 from datetime import datetime
+from typing import Optional
+
+from django.db import models
 
 
 class Coin(models.Model):
@@ -27,8 +29,18 @@ class Author(models.Model):
     name: str = models.CharField(max_length=12)
     surname: str = models.CharField(max_length=25)
     email: str = models.EmailField()
-    biography: str = models.TextField()
-    birthday = models.DateField()
+    biography: Optional[str] = models.TextField()
+    birthday: datetime = models.DateField()
+
+    @classmethod
+    def create(cls, **kwargs) -> "Author":
+        return Author(
+            name=kwargs["name"],
+            surname=kwargs["surname"],
+            email=kwargs["email"],
+            biography=kwargs["biography"],
+            birthday=kwargs["birthday"]
+        )
 
     @property
     def fullname(self):

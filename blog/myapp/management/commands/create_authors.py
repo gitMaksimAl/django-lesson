@@ -1,5 +1,7 @@
+from datetime import timedelta
+
+from django.utils import timezone
 from django.core.management.base import BaseCommand
-from datetime import date, timedelta
 
 from myapp.models import Author
 
@@ -13,6 +15,6 @@ class Command(BaseCommand):
                 surname=f"Surname{i}",
                 email=f"name{i}@mail.ru",
                 biography=f"Biography of Name{i} Surname{i}",
-                birthday=date.today() - timedelta(days=i*3650)
+                birthday=timezone.now() - timedelta(days=i*3650)
             )
             author.save()
