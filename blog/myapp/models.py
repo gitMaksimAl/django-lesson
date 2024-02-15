@@ -46,6 +46,9 @@ class Author(models.Model):
     def fullname(self):
         return f"{self.name} {self.surname}"
 
+    def __str__(self):
+        return f"{self.fullname}(author)"
+
 
 class Post(models.Model):
 
