@@ -4,8 +4,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from django.utils.timezone import now
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 
-from .models import Order, Item, Client
+from .models import Order, Item, Client, Picture
+from .forms import PictureForm, ItemForm
 
 
 def main_page(request: HttpRequest):
@@ -41,10 +44,10 @@ def all_orders(request: HttpRequest) -> HttpResponse:
 def all_items(request: HttpRequest) -> HttpResponse:
     items = Item.objects.all()
     all_item = [
-        f"<li>{item}</li>"
+        f"<div class='item-box'><img src='{item.image.image}' alt='item image' /><p>{item}</p></div>"
         for item in items
     ]
-    content = f"<center><h1>Items</h1></center><ul>{''.join(all_item)}</ul>"
+    content = f"<center><h1>Items</h1></center>{''.join(all_item)}"
     return HttpResponse(content=content)
 
 
@@ -90,3 +93,38 @@ def client_orders(request: HttpRequest, client_pk: int) -> HttpResponse:
             orders["orders"]["lt_year"]["items"].append(order)
             orders["orders"]["lt_week"]["total"] += order.item.price
     return render(request, "firstapp/order.html", context=orders)
+
+
+def add_image(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        form = PictureForm(request.POST, request.FILES)
+        message = "not valid file"
+        if form.is_valid():
+            file = FileSystemStorage()
+            image = form.cleaned_data["image"]
+            file.save(image.name, image)
+            file_name = settings.MEDIA_ROOT / image.name
+            file_db = Picture(image=file_name.as_posix())
+            file_db.save()
+            message = "uploaded"
+        return render(request, "firstapp/add_image.html", context={"form": form, "message": message})
+    form = PictureForm()
+    return render(request, "firstapp/add_image.html", context={"form": form})
+
+
+def add_item(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            image = Picture.objects.get(pk=form.cleaned_data["image"].id)
+            new_item = Item(
+                summary=form.cleaned_data["summary"],
+                description=form.cleaned_data["description"],
+                price=form.cleaned_data["price"],
+                count=form.cleaned_data["count"],
+                image=image
+            )
+            new_item.save()
+        return render(request, "firstapp/add_item.html", context={"form": form})
+    form = ItemForm()
+    return render(request, "firstapp/add_item.html", context={"form": form})

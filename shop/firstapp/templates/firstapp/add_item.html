@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1 style="text-align: center">New item</h1>
+{% endblock header %}
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock main %}
+{% block footer %}
+<p>Copyrigth</p>
+{% endblock footer %}
