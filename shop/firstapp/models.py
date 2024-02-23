@@ -19,7 +19,8 @@ class Picture(models.Model):
     image: str = models.ImageField()
 
     def __str__(self):
-        return f"Picture('{self.image}')"
+        return str(self.image)
+
 
 class Item(models.Model):
     summary: str = models.CharField(max_length=25)
@@ -46,4 +47,4 @@ class Order(models.Model):
         return round(total_price, 2)
 
     def __str__(self):
-        return f"Order №{self.pk} {self.created_at}: {self.client}, {self.item}"
+        return f"Order №{self.pk} item №{self.item.pk}: {self.created_at}"
