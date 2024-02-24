@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% block header %}<h1>Authors</h1>{% endblock header %}
 {% block content %}
+    <ul>
     {% for item in authors %}
-        <ul>{{ item.author.fullname }}</ul>
+        <li>{{ item.author.fullname }}</li>
+            <ul>
             {% for post in item.posts %}
                 <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
             {% endfor %}
+            </ul>
     {% endfor %}
+    </ul>
 {% endblock content %}
 {% block footer %}<p>See you soon!</p>{% endblock footer %}
